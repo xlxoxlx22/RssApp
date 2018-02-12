@@ -12,7 +12,6 @@ import org.parceler.Parcels;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private Article mCurrentArticle;
 
     public static void buildIntent(Activity activity, Bundle extraParams) {
         if (activity != null) {
@@ -30,7 +29,14 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null) {
             Bundle arguments = intent.getExtras();
-            mCurrentArticle = Parcels.unwrap(arguments.getParcelable("article"));
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, DetailFragment.getInstance(arguments))
+                    .commit();
         }
+
+
+
     }
 }

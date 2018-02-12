@@ -12,16 +12,12 @@ import com.squareup.picasso.Picasso;
 import com.test.rssapp.network.model.Article;
 import com.test.rssapp.rssapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.subjects.PublishSubject;
 
-/**
- * Created by admin on 12.02.18.
- */
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
 
@@ -55,6 +51,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
         return mAndroidList.size();
     }
 
+
+    public void updateAdapterList(List<Article> list){
+        if (list.size() > 0) {
+            mAndroidList.clear();
+            mAndroidList.addAll(list);
+            notifyDataSetChanged();
+        }
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.list_item_feed_title) TextView mTitle;
         @BindView(R.id.list_item_feed_image) ImageView mImage;
@@ -68,7 +72,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
 
             mTitle.setText(item.getTitle());
             mDescription.setText(item.getDescription());
-            Picasso.with(mContext).load(item.getEnclosure().getLink()).fit().centerCrop().placeholder(R.mipmap.ic_launcher).into(mImage);
+            Picasso.with(mContext)
+                    .load(item.getEnclosure().getImageUrl())
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(mImage);
 
             itemView.setOnClickListener(v -> mItemClickSubject.onNext(item));
 

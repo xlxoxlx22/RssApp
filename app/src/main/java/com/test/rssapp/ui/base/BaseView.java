@@ -9,4 +9,6 @@ public interface BaseView {
     void showLoadingProgress();
     void hideLoadingProgress();
 
+    void showToastMessage(int message);
+
 }

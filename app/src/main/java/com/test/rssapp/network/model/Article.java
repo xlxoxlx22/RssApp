@@ -1,6 +1,8 @@
 package com.test.rssapp.network.model;
 
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
@@ -10,6 +12,11 @@ public class Article {
 
     @SerializedName("url")          String mUrl;
     @SerializedName("title")        String mTitle;
+    @SerializedName("link")         String mLink;
+    @SerializedName("thumbnail")    String mImage;
+    @SerializedName("description")  String mDescription;
+    @SerializedName("enclosure")    Enclosure mEnclosure;
+    @SerializedName("pubDate")      String mPublicationDate;
 
     public String getUrl() {
         return mUrl;
@@ -39,19 +46,22 @@ public class Article {
         return mEnclosure;
     }
 
-    @SerializedName("link")         String mLink;
-    @SerializedName("pubDate")      String mPublicationDate;
-    @SerializedName("thumbnail")    String mImage;
-    @SerializedName("description")  String mDescription;
-    @SerializedName("enclosure")    Enclosure mEnclosure;
+
 
 
     @Parcel
-    public class Enclosure {
+    public static class Enclosure {
         @SerializedName("link") String mLink;
+        @SerializedName("thumbnail") String mThumbnail;
 
-        public String getLink() {
-            return mLink;
+
+
+        public String getImageUrl() {
+            if (TextUtils.isEmpty(mThumbnail)) {
+                return mLink;
+            } else {
+                return mThumbnail;
+            }
         }
     }
 }

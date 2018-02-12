@@ -6,7 +6,5 @@ package com.test.rssapp.ui.base;
 
 public interface BasePresenter<T extends BaseView> {
 
-    void subscribeOnView(T baseView);
     void unsubscribeView();
-
 }

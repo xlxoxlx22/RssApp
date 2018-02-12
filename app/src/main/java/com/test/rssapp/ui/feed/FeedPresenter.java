@@ -1,13 +1,19 @@
 package com.test.rssapp.ui.feed;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.test.rssapp.helpers.AppPreferences;
 import com.test.rssapp.network.ApiService;
 import com.test.rssapp.network.RetrofitClient;
 import com.test.rssapp.network.model.Article;
+import com.test.rssapp.rssapp.R;
+import com.test.rssapp.ui.base.App;
 import com.test.rssapp.ui.base.BasePresenter;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -21,13 +27,7 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
 
     @SuppressWarnings("unchecked")
     public FeedPresenter(T baseView){
-        subscribeOnView(baseView);
-    }
-
-
-    @Override
-    public void subscribeOnView(T baseView) {
-        this.mView = baseView;
+        mView = baseView;
     }
 
     @Override
@@ -35,25 +35,34 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
         mView = null;
     }
 
-    public void loadRssData(){
-        String rssUrl = "http://rss.cnn.com/rss/edition.rss";
+    public void tryLoadFeedFromCache(){
+        List<Article> list = AppPreferences.getInstance().getArticlesList();
+        if (list != null && list.size() != 0){
+            mView.updateAdapter(list);
+        } else {
+            updateRssData();
+        }
+    }
+
+    public void updateRssData(){
+        String rssUrl = "http://rss.cnn.com/rss/edition_sport.rss";
         ApiService apiService =  RetrofitClient.getInstance().getApi();
         apiService.getRssList(rssUrl)
-                .doOnNext(requestResponse -> mView.showLoadingProgress())
+                .doOnNext(requestResponse -> {
+                    mView.showLoadingProgress();
+                    AppPreferences.getInstance().saveArticles(requestResponse);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(() -> mView.hideLoadingProgress())
                 .subscribe(requestResponse -> {
                     if (requestResponse != null && requestResponse.getStatus()) {
-
-                        mView.hideLoadingProgress();
                         mView.updateAdapter(requestResponse.getArticles());
                     } else {
-                        mView.showToastMessage("Can't receive data");
+                        mView.showToastMessage(R.string.load_data_error);
                     }
-                }, throwable -> {
-                    mView.hideLoadingProgress();
-                    mView.showToastMessage(throwable.getLocalizedMessage());
-                });
+
+                }, throwable -> mView.showToastMessage(R.string.load_data_error));
     }
 
 
