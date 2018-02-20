@@ -35,8 +35,5 @@ public class DetailActivity extends AppCompatActivity {
                     .replace(R.id.container, DetailFragment.getInstance(arguments))
                     .commit();
         }
-
-
-
     }
 }

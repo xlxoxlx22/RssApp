@@ -8,7 +8,6 @@ import com.test.rssapp.network.ApiService;
 import com.test.rssapp.network.RetrofitClient;
 import com.test.rssapp.network.model.Article;
 import com.test.rssapp.rssapp.R;
-import com.test.rssapp.ui.base.App;
 import com.test.rssapp.ui.base.BasePresenter;
 
 import org.parceler.Parcels;
@@ -26,7 +25,8 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
 
 
     @SuppressWarnings("unchecked")
-    public FeedPresenter(T baseView){
+    @Override
+    public void subscribeOnView(T baseView) {
         mView = baseView;
     }
 
