@@ -39,6 +39,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
 
         ButterKnife.bind(this);
         mFeedPresenter = new FeedPresenter();
+        mFeedPresenter.subscribeOnView(this);
 
         setupViews();
         setupRowClickListener();

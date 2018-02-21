@@ -4,4 +4,7 @@
     <string name="link_is_empty">Link is empty</string>
     <string name="load_data_error">"Can't receive data"</string>
 
+    <string name="item_list_title_placeholder">Title</string>
+    <string name="item_list_detail_placeholder">Details</string>
+
 </resources>

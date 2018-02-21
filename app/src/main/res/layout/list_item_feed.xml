@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_marginTop="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="4dp" >
 
     <RelativeLayout
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/list_item_feed_image"
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/list_item_feed_image"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_toRightOf="@+id/list_item_feed_image"
-        android:paddingLeft="16dp"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_toRightOf="@+id/list_item_feed_image"
+            android:paddingLeft="16dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:text="Title"
-        style="@style/HeaderListItemText"
-        android:id="@+id/list_item_feed_title" />
+            <TextView
+                tools:text="@string/item_list_title_placeholder"
+                style="@style/HeaderListItemText"
+                android:id="@+id/list_item_feed_title" />
 
-    <TextView
-        android:text="Details"
-        style="@style/DetailListItemText"
-        android:id="@+id/list_item_feed_description" />
+            <TextView
+                tools:text="@string/item_list_detail_placeholder"
+                style="@style/DetailListItemText"
+                android:id="@+id/list_item_feed_description" />
 
-    </LinearLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>
 

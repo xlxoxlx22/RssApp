@@ -24,6 +24,11 @@ public class DetailPresenter<T extends DetailView> implements BasePresenter<T> {
     }
 
     @Override
+    public void subscribeOnView(T baseView) {
+        mView = baseView;
+    }
+
+    @Override
     public void unsubscribeView() {
         mView = null;
     }
