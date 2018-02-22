@@ -6,5 +6,10 @@
 
     <string name="item_list_title_placeholder">Title</string>
     <string name="item_list_detail_placeholder">Details</string>
+    <string name="fragment_detail_link_placeholder">Source link = http://yandex.ru</string>
+    <string name="fragment_detail_author_placeholder">Author..</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

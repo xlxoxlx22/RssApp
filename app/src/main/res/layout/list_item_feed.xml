@@ -19,13 +19,13 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/list_item_feed_image"
+            android:id="@+id/image"
             tools:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:layout_toRightOf="@+id/list_item_feed_image"
+            android:layout_toRightOf="@+id/image"
             android:paddingLeft="16dp"
             android:layout_centerVertical="true"
             android:orientation="vertical"

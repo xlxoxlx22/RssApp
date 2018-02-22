@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,30 +12,34 @@
         <ImageView
             android:scaleType="fitCenter"
             android:layout_centerHorizontal="true"
-            android:id="@+id/feed_detail_image"
+            android:id="@+id/image"
             android:src="@mipmap/ic_launcher_round"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:layout_below="@+id/feed_detail_image"
+            android:layout_below="@+id/image"
             android:layout_centerHorizontal="true"
             android:id="@+id/feed_detail_title"
             style="@style/HeaderPaddingText"
-            android:text="Title" />
+            tools:text="@string/item_list_title_placeholder" />
+
+        <View
+            android:layout_below="@+id/feed_detail_title"
+            style="@style/LineSeparator"/>
 
         <TextView
             android:layout_below="@+id/feed_detail_title"
             style="@style/PaddingText"
             android:id="@+id/feed_detail_content"
-            android:text="Content"
+            tools:text="@string/item_list_detail_placeholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             style="@style/PaddingText"
             android:id="@+id/feed_detail_author"
-            android:text="author"
+            tools:text="@string/fragment_detail_author_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/feed_detail_content"
@@ -46,8 +51,8 @@
             android:id="@+id/feed_detail_link"
             android:layout_below="@+id/feed_detail_author"
             android:layout_alignParentRight="true"
-            android:text="http://yandex.ru"
             android:autoLink="web"
+            tools:text="@string/fragment_detail_link_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.test.rssapp.ui.feed.adapters;
 
 import android.content.Context;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +24,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
 
     private Context mContext;
     private final List<Article> mAndroidList;
-    private PublishSubject<Article> mItemClickSubject = PublishSubject.create();
+    private PublishSubject<Pair<Article, ImageView>> mItemClickSubject = PublishSubject.create();
 
-    public PublishSubject<Article> getItemClickSubject() {
+    public PublishSubject<Pair<Article, ImageView>> getItemClickSubject() {
         return mItemClickSubject;
     }
 
@@ -79,7 +80,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                     .placeholder(R.mipmap.ic_launcher)
                     .into(mImage);
 
-            itemView.setOnClickListener(v -> mItemClickSubject.onNext(item));
+            itemView.setOnClickListener(v -> mItemClickSubject.onNext(new Pair<Article, ImageView>(item, mImage)));
 
         }
     }

@@ -2,6 +2,8 @@ package com.test.rssapp.ui.feed;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
+import android.widget.ImageView;
 
 import com.test.rssapp.helpers.AppPreferences;
 import com.test.rssapp.network.ApiService;
@@ -67,10 +69,19 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
 
 
 
-    public void showArticleDetails(Article article) {
-        mExtraParamsBundle.putParcelable("article", Parcels.wrap(article));
-        mView.openFeedDetails();
+//    public void showArticleDetails(Article article) {
+//        mExtraParamsBundle.putParcelable("article", Parcels.wrap(article));
+//        mView.openFeedDetails();
+//    }
+
+    public void showArticleDetails(Pair<Article, ImageView> articleImageViewPair) {
+        if (articleImageViewPair.first != null)
+            mExtraParamsBundle.putParcelable("article", Parcels.wrap(articleImageViewPair.first));
+//        mView.openFeedDetails();
+        mView.openFeedDetailsWithViewTransition(articleImageViewPair.second);
     }
+
+
 
     public Bundle getExtraParamsBundle(){
         if (mExtraParamsBundle != null) {
