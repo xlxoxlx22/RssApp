@@ -26,7 +26,7 @@ public class DetailFragment extends Fragment implements DetailView{
 
     @BindView(R.id.feed_detail_link) TextView mDetailLink;
     @BindView(R.id.feed_detail_title) TextView mDetailTitle;
-    @BindView(R.id.feed_detail_image) ImageView mDetailImage;
+    @BindView(R.id.image) ImageView mDetailImage;
     @BindView(R.id.feed_detail_content) TextView mDetailContent;
     @BindView(R.id.feed_detail_author) TextView mDetailPublishDate;
 

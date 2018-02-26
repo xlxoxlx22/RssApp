@@ -1,6 +1,8 @@
 package com.test.rssapp.ui.feed;
 
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Fade;
@@ -65,6 +67,7 @@ public class FeedFragment extends Fragment implements FeedView{
         if (mDisposable!= null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
+        mFragmentUnbinder.unbind();
         mFeedPresenter.unsubscribeView();
     }
 
@@ -126,15 +129,13 @@ public class FeedFragment extends Fragment implements FeedView{
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             articleDetails.setSharedElementEnterTransition(new DetailsTransition());
-            articleDetails.setEnterTransition(new Fade());
-            articleDetails.setExitTransition(new Fade());
             articleDetails.setSharedElementReturnTransition(new DetailsTransition());
         }
 
-        ViewCompat.setTransitionName(view, String.format("articleDetails_$d",imageCounter++));
+//        ViewCompat.setTransitionName(view, String.format("articleDetails_$d",imageCounter++));
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .addSharedElement(view, "article_image")
+                .addSharedElement(view, getActivity().getResources().getString(R.string.image_transition_name))
                 .replace(R.id.container, articleDetails)
                 .addToBackStack(null)
                 .commit();

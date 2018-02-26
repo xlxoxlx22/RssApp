@@ -62,7 +62,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.list_item_feed_title) TextView mTitle;
-        @BindView(R.id.list_item_feed_image) ImageView mImage;
+        @BindView(R.id.image) ImageView mImage;
         @BindView(R.id.list_item_feed_description) TextView mDescription;
 
         public ViewHolder(View view) {
@@ -80,7 +80,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                     .placeholder(R.mipmap.ic_launcher)
                     .into(mImage);
 
-            itemView.setOnClickListener(v -> mItemClickSubject.onNext(new Pair<Article, ImageView>(item, mImage)));
+            itemView.setOnClickListener(v -> mItemClickSubject.onNext(new Pair<>(item, mImage)));
 
         }
     }

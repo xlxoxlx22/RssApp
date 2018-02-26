@@ -13,6 +13,7 @@
             android:scaleType="fitCenter"
             android:layout_centerHorizontal="true"
             android:id="@+id/image"
+            android:transitionName="@string/image_transition_name"
             android:src="@mipmap/ic_launcher_round"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
