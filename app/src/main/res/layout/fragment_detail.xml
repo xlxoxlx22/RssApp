@@ -10,11 +10,11 @@
 
         <ImageView
             android:scaleType="fitCenter"
+            android:background="@color/cardview_dark_background"
             android:layout_centerHorizontal="true"
             android:id="@+id/feed_detail_image"
-            android:src="@mipmap/ic_launcher_round"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="240dp" />
 
         <TextView
             android:layout_below="@+id/feed_detail_image"

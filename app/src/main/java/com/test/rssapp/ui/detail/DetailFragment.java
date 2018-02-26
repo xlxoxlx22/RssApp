@@ -67,7 +67,8 @@ public class DetailFragment extends Fragment implements DetailView{
 
         Picasso.with(getActivity())
                 .load(mDetailPresenter.getDetaiImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
                 .into(mDetailImage);
     }
 
