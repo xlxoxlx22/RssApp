@@ -11,11 +11,15 @@ import android.widget.ProgressBar;
 import com.test.rssapp.helpers.ToastHelper;
 import com.test.rssapp.network.model.Article;
 import com.test.rssapp.rssapp.R;
+import com.test.rssapp.ui.base.App;
 import com.test.rssapp.ui.detail.DetailActivity;
 import com.test.rssapp.ui.feed.adapters.FeedAdapter;
+import com.test.rssapp.ui.feed.module.FeedModule;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +31,9 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     @BindView(R.id.feed_list_recycler_view) RecyclerView mFeedRecyclerView;
     @BindView(R.id.feed_swipe_update_view) SwipeRefreshLayout mSwipeRefreshLayout;
 
+    @Inject FeedPresenter mFeedPresenter;
+
     FeedAdapter mFeedAdapter;
-    FeedPresenter mFeedPresenter;
     Disposable mDisposable = null;
 
 
@@ -36,10 +41,10 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        App.get(this).getComponent().plus(new FeedModule()).inject(this); // объявляем модуль
 
-        ButterKnife.bind(this);
-        mFeedPresenter = new FeedPresenter();
-        mFeedPresenter.subscribeOnView(this);
+        ButterKnife.bind(this);                                           // инициализируем view
+        mFeedPresenter.subscribeOnView(this);                             // привязываем presenter
 
         setupViews();
         setupRowClickListener();

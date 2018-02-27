@@ -16,19 +16,10 @@ public class AppPreferences {
     private static final String PREFERENCE_RESPONSE_KEY = "response";
 
 
-    private static AppPreferences instance;
     private SharedPreferences mSharedPrefs;
 
-    public static void init(Context context) {
-        instance = new AppPreferences(context);
-    }
-
-    public static AppPreferences getInstance() {
-        return instance;
-    }
-
-    private AppPreferences(Context context) {
-        this.mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    public AppPreferences(SharedPreferences sharedPreferences) {
+        this.mSharedPrefs = sharedPreferences;
     }
 
 
@@ -49,7 +40,6 @@ public class AppPreferences {
             RequestResponse obj = gson.fromJson(json, RequestResponse.class);
             return obj.getArticles();
         }
-
         return new ArrayList<Article>();
     }
 }

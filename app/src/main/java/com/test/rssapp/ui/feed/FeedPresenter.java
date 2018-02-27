@@ -1,5 +1,6 @@
 package com.test.rssapp.ui.feed;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -22,7 +23,14 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
 
     protected T mView;
     private Bundle mExtraParamsBundle = new Bundle();
+    private ApiService mApiService;
+    private AppPreferences mAppPreferences;
 
+
+    public FeedPresenter(ApiService apiService, AppPreferences appPreferences){
+        this.mApiService = apiService;
+        this.mAppPreferences = appPreferences;
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -36,7 +44,7 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
     }
 
     public void tryLoadFeedFromCache(){
-        List<Article> list = AppPreferences.getInstance().getArticlesList();
+        List<Article> list = mAppPreferences.getArticlesList();
         if (list != null && list.size() != 0){
             mView.updateAdapter(list);
         } else {
@@ -46,11 +54,10 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
 
     public void updateRssData(){
         String rssUrl = "http://rss.cnn.com/rss/edition_sport.rss";
-        ApiService apiService =  RetrofitClient.getInstance().getApi();
-        apiService.getRssList(rssUrl)
+        mApiService.getRssList(rssUrl)
                 .doOnNext(requestResponse -> {
                     mView.showLoadingProgress();
-                    AppPreferences.getInstance().saveArticles(requestResponse);
+                    mAppPreferences.saveArticles(requestResponse);
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

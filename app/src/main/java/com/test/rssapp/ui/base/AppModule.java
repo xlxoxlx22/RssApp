@@ -1,8 +1,8 @@
 package com.test.rssapp.ui.base;
 
 
+import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.test.rssapp.di.scope.ApplicationScope;
 
@@ -12,15 +12,21 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private Context mAppContext;
+    Application mApplication;
 
-    public AppModule(@NonNull Context context){
-        this.mAppContext = context;
+    public AppModule(Application mApplication) {
+        this.mApplication = mApplication;
     }
 
     @Provides
     @ApplicationScope
-    Context providesContext(){
-        return mAppContext;
+    Application provideApplication() {
+        return mApplication;
+    }
+
+    @Provides
+    @ApplicationScope
+    public Context provideContext() {
+        return mApplication;
     }
 }

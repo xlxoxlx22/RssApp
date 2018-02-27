@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     private static final String BASE_URL = "https://api.rss2json.com/v1/";
+
     public NetworkModule() {}
 
     @Provides

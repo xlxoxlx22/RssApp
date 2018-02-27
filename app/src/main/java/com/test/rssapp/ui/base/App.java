@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.test.rssapp.helpers.AppPreferences;
+import com.test.rssapp.helpers.SharedPreferencesModule;
 import com.test.rssapp.network.NetworkModule;
 
 public class App extends Application {
@@ -15,7 +16,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mComponent = buildComponent();
-        AppPreferences.init(get(this));
     }
 
     public static AppComponent getComponent(){
@@ -29,7 +29,7 @@ public class App extends Application {
     protected AppComponent buildComponent() {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .networkModule(new NetworkModule())
+                .sharedPreferencesModule(new SharedPreferencesModule(this))
                 .build();
     }
 }
