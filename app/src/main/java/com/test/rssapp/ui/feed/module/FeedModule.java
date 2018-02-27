@@ -14,8 +14,7 @@ public class FeedModule {
     @Provides
     @ActivityScope
     public FeedPresenter providesFeedPresenter(ApiService apiService,
-                                               AppPreferences appPreferences)
-    {
+                                               AppPreferences appPreferences) {
         return new FeedPresenter(
                 apiService,
                 appPreferences);

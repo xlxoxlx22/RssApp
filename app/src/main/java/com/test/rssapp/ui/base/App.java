@@ -2,15 +2,11 @@ package com.test.rssapp.ui.base;
 
 import android.app.Application;
 import android.content.Context;
-
-import com.test.rssapp.helpers.AppPreferences;
 import com.test.rssapp.helpers.SharedPreferencesModule;
-import com.test.rssapp.network.NetworkModule;
 
 public class App extends Application {
 
     private static AppComponent mComponent;
-
 
     @Override
     public void onCreate() {

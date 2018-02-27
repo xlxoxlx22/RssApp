@@ -8,6 +8,5 @@ import dagger.Subcomponent;
 @ActivityScope
 @Subcomponent(modules = { FeedModule.class })
 public interface FeedComponent {
-
     void inject(FeedActivity feedActivity);
 }
