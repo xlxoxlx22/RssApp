@@ -1,12 +1,9 @@
 package com.test.rssapp.ui.feed;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.test.rssapp.helpers.AppPreferences;
+import com.test.rssapp.data.AppPreferences;
 import com.test.rssapp.network.ApiService;
-import com.test.rssapp.network.RetrofitClient;
 import com.test.rssapp.network.model.Article;
 import com.test.rssapp.rssapp.R;
 import com.test.rssapp.ui.base.BasePresenter;

@@ -1,27 +1,23 @@
-package com.test.rssapp.helpers;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
+package com.test.rssapp.data;
+import java.util.List;
+import java.util.ArrayList;
 import com.google.gson.Gson;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+
 import com.test.rssapp.network.model.Article;
 import com.test.rssapp.network.model.RequestResponse;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class AppPreferences {
 
+    private SharedPreferences mSharedPrefs;
     private static final String PREFERENCE_RESPONSE_KEY = "response";
 
-
-    private SharedPreferences mSharedPrefs;
 
     public AppPreferences(SharedPreferences sharedPreferences) {
         this.mSharedPrefs = sharedPreferences;
     }
-
 
     public void saveArticles(RequestResponse response) {
         SharedPreferences.Editor editor = mSharedPrefs.edit();
@@ -29,17 +25,16 @@ public class AppPreferences {
         String json = gson.toJson(response);
         editor.putString(PREFERENCE_RESPONSE_KEY, json);
         editor.apply();
-
     }
 
     public List<Article> getArticlesList() {
         Gson gson = new Gson();
         String json = mSharedPrefs.getString(PREFERENCE_RESPONSE_KEY, null);
 
-        if (json != null) {
+        if (!TextUtils.isEmpty(json)) {
             RequestResponse obj = gson.fromJson(json, RequestResponse.class);
             return obj.getArticles();
         }
-        return new ArrayList<Article>();
+        return new ArrayList<>();
     }
 }

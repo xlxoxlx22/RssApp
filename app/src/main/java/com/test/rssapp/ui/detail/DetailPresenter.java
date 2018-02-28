@@ -15,24 +15,15 @@ public class DetailPresenter<T extends DetailView> implements BasePresenter<T> {
 
     protected T mView;
     private Article mCurrentArticle;
+    private static final String ARGUMENTS_ARTICLE_KEY = "article";
 
+    public DetailPresenter(){}
 
-    @SuppressWarnings("unchecked")
-    public DetailPresenter(T baseView, Bundle arguments){
-        mView = baseView;
-        mCurrentArticle = Parcels.unwrap(arguments.getParcelable("article"));
+    public void setArticle(Bundle arguments){
+        if (arguments != null && arguments.containsKey(ARGUMENTS_ARTICLE_KEY)) {
+            mCurrentArticle = Parcels.unwrap(arguments.getParcelable(ARGUMENTS_ARTICLE_KEY));
+        }
     }
-
-    @Override
-    public void subscribeOnView(T baseView) {
-        mView = baseView;
-    }
-
-    @Override
-    public void unsubscribeView() {
-        mView = null;
-    }
-
 
     public String getDetailTitle(){
         if (mCurrentArticle != null && !TextUtils.isEmpty(mCurrentArticle.getTitle()))
@@ -73,6 +64,15 @@ public class DetailPresenter<T extends DetailView> implements BasePresenter<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void subscribeOnView(T baseView) {
+        mView = baseView;
+    }
 
+    @Override
+    public void unsubscribeView() {
+        mView = null;
+    }
 
 }

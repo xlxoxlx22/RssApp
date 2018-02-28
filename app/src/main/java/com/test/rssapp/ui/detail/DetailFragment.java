@@ -14,15 +14,20 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.test.rssapp.helpers.ToastHelper;
 import com.test.rssapp.rssapp.R;
+import com.test.rssapp.ui.base.App;
+import com.test.rssapp.ui.detail.module.DetailModule;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class DetailFragment extends Fragment implements DetailView{
+public class DetailFragment extends Fragment implements DetailView {
 
     private Unbinder mFragmentUnbinder;
-    private DetailPresenter mDetailPresenter;
+
+    @Inject DetailPresenter mDetailPresenter;
 
     @BindView(R.id.feed_detail_link) TextView mDetailLink;
     @BindView(R.id.feed_detail_title) TextView mDetailTitle;
@@ -41,9 +46,10 @@ public class DetailFragment extends Fragment implements DetailView{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        mDetailPresenter = new DetailPresenter(this, arguments);
+        App.get(getActivity()).getComponent().plus(new DetailModule()).inject(this);
 
+        mDetailPresenter.subscribeOnView(this);
+        mDetailPresenter.setArticle(getArguments());
     }
 
 

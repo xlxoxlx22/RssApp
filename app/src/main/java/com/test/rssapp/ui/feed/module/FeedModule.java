@@ -1,7 +1,6 @@
 package com.test.rssapp.ui.feed.module;
 import com.test.rssapp.di.scope.ActivityScope;
-import com.test.rssapp.di.scope.ApplicationScope;
-import com.test.rssapp.helpers.AppPreferences;
+import com.test.rssapp.data.AppPreferences;
 import com.test.rssapp.network.ApiService;
 import com.test.rssapp.ui.feed.FeedPresenter;
 

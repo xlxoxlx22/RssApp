@@ -2,7 +2,7 @@ package com.test.rssapp.ui.base;
 
 import android.app.Application;
 import android.content.Context;
-import com.test.rssapp.helpers.SharedPreferencesModule;
+import com.test.rssapp.data.SharedPreferencesModule;
 
 public class App extends Application {
 
