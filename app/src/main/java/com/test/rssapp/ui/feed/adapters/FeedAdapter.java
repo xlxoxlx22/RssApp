@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.test.rssapp.network.model.Article;
+import com.test.rssapp.network.model.response.Article;
 import com.test.rssapp.rssapp.R;
 
 import java.util.List;
@@ -73,7 +73,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             mTitle.setText(item.getTitle());
             mDescription.setText(item.getDescription());
             Picasso.with(mContext)
-                    .load(item.getEnclosure().getImageUrl())
+                    .load(item.getImage())
                     .fit()
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher)

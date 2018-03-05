@@ -2,9 +2,12 @@
     <string name="app_name">RssApp</string>
 
     <string name="link_is_empty">Link is empty</string>
-    <string name="load_data_error">"Can't receive data"</string>
+    <string name="load_data_error">Can\'t receive data</string>
+    <string name="feed_view_is_ready">Feed view is ready</string>
 
     <string name="item_list_title_placeholder">Title</string>
     <string name="item_list_detail_placeholder">Details</string>
+
+    <string name="news_api_key_string">057c3271583b48caa753ac0891fcb819</string>
 
 </resources>

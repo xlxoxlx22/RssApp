@@ -27,6 +27,7 @@ public class DetailFragment extends Fragment implements DetailView {
 
     private Unbinder mFragmentUnbinder;
 
+    @Inject ToastHelper mToastHelper;
     @Inject DetailPresenter mDetailPresenter;
 
     @BindView(R.id.feed_detail_link) TextView mDetailLink;
@@ -89,7 +90,7 @@ public class DetailFragment extends Fragment implements DetailView {
     @Override
     public void showToastMessage(final int message) {
         if (getActivity() != null) {
-            getActivity().runOnUiThread(() -> ToastHelper.showToastMessageFromResource(getActivity(), message));
+            getActivity().runOnUiThread(() -> mToastHelper.showToastMessageFromResource(message));
         }
     }
 
@@ -97,7 +98,7 @@ public class DetailFragment extends Fragment implements DetailView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mDetailPresenter.unsubscribeView();
+        mDetailPresenter.unsubscribe();
         mFragmentUnbinder.unbind();
     }
 

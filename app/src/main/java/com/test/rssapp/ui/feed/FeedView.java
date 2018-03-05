@@ -1,6 +1,6 @@
 package com.test.rssapp.ui.feed;
 
-import com.test.rssapp.network.model.Article;
+import com.test.rssapp.network.model.response.Article;
 import com.test.rssapp.ui.base.BaseView;
 
 import java.util.List;

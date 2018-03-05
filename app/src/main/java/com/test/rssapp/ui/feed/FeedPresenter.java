@@ -1,10 +1,16 @@
 package com.test.rssapp.ui.feed;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
+import com.test.rssapp.data.AppEvent;
+import com.test.rssapp.data.AppEventBus;
 import com.test.rssapp.data.AppPreferences;
 import com.test.rssapp.network.ApiService;
-import com.test.rssapp.network.model.Article;
+import com.test.rssapp.network.model.request.RequestObject;
+import com.test.rssapp.network.model.response.Article;
+import com.test.rssapp.network.model.response.ResponseObject;
 import com.test.rssapp.rssapp.R;
 import com.test.rssapp.ui.base.BasePresenter;
 
@@ -19,13 +25,20 @@ import io.reactivex.schedulers.Schedulers;
 public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
 
     protected T mView;
-    private Bundle mExtraParamsBundle = new Bundle();
+    private Context mContext;
     private ApiService mApiService;
+    private AppEventBus mAppEventBus;
     private AppPreferences mAppPreferences;
+    private Bundle mExtraParamsBundle = new Bundle();
 
 
-    public FeedPresenter(ApiService apiService, AppPreferences appPreferences){
+    public FeedPresenter(@NonNull Context context,
+                         @NonNull AppEventBus appEventBus,
+                         @NonNull ApiService apiService,
+                         @NonNull AppPreferences appPreferences) {
+        this.mContext = context;
         this.mApiService = apiService;
+        this.mAppEventBus = appEventBus;
         this.mAppPreferences = appPreferences;
     }
 
@@ -36,7 +49,7 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
     }
 
     @Override
-    public void unsubscribeView() {
+    public void unsubscribe() {
         mView = null;
     }
 
@@ -50,23 +63,21 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
     }
 
     public void updateRssData(){
-        String rssUrl = "http://rss.cnn.com/rss/edition_sport.rss";
-        mApiService.getRssList(rssUrl)
-                .doOnNext(requestResponse -> {
-                    mView.showLoadingProgress();
-                    mAppPreferences.saveArticles(requestResponse);
-                })
+        mApiService.getRssList(getNewsSource())
+                .doOnNext(responseObject -> mView.showLoadingProgress())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete(() -> mView.hideLoadingProgress())
-                .subscribe(requestResponse -> {
-                    if (requestResponse != null && requestResponse.getStatus()) {
-                        mView.updateAdapter(requestResponse.getArticles());
-                    } else {
-                        mView.showToastMessage(R.string.load_data_error);
-                    }
-
-                }, throwable -> mView.showToastMessage(R.string.load_data_error));
+                .subscribe(responseObject -> {
+                            if (checkIfHasResponse(responseObject)) {
+                                mAppEventBus.onNext(AppEvent.DATA_RECEIVED);
+                                mAppPreferences.saveArticles(responseObject);
+                                mView.updateAdapter(responseObject.getArticles());
+                            } else {
+                                mView.showToastMessage(R.string.load_data_error);
+                            }
+                        },
+                        throwable -> mView.showToastMessage(R.string.load_data_error),
+                        () -> mView.hideLoadingProgress());
     }
 
 
@@ -84,5 +95,17 @@ public class FeedPresenter<T extends FeedView> implements BasePresenter<T> {
         }
     }
 
+
+    private boolean checkIfHasResponse(@NonNull ResponseObject response){
+        return response.getStatus();
+    }
+
+
+    @NonNull
+    private String getNewsSource(){
+        return "google-news-ru";
+    }
+
+//    {"status":"error","code":"apiKeyMissing","message":"Your API key is missing. Append this to the URL with the apiKey param, or use the x-api-key HTTP header."}
 
 }

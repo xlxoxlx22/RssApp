@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.test.rssapp.data.AppEvent;
+import com.test.rssapp.data.AppEventBus;
 import com.test.rssapp.helpers.ToastHelper;
-import com.test.rssapp.network.model.Article;
+import com.test.rssapp.network.model.response.Article;
 import com.test.rssapp.rssapp.R;
 import com.test.rssapp.ui.base.App;
 import com.test.rssapp.ui.detail.DetailActivity;
@@ -31,10 +33,13 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     @BindView(R.id.feed_list_recycler_view) RecyclerView mFeedRecyclerView;
     @BindView(R.id.feed_swipe_update_view) SwipeRefreshLayout mSwipeRefreshLayout;
 
+    @Inject AppEventBus mAppEventBus;
+    @Inject ToastHelper mToastHelper;
     @Inject FeedPresenter mFeedPresenter;
 
     FeedAdapter mFeedAdapter;
     Disposable mDisposable = null;
+    Disposable mAppEventDisposable = null;
 
 
     @Override
@@ -46,6 +51,10 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         ButterKnife.bind(this);                                           // инициализируем view
         mFeedPresenter.subscribeOnView(this);                             // привязываем presenter
 
+        mAppEventDisposable = mAppEventBus.getAppEventBus()
+                .filter(appEvent -> appEvent == AppEvent.DATA_RECEIVED)
+                .subscribe(appEvent -> mToastHelper.showToastMessageFromResource(R.string.feed_view_is_ready));
+
         setupViews();
         setupRowClickListener();
         mFeedPresenter.tryLoadFeedFromCache();
@@ -55,10 +64,14 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mAppEventDisposable!= null && !mAppEventDisposable.isDisposed()) {
+            mAppEventDisposable.dispose();
+        }
+
         if (mDisposable!= null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
-        mFeedPresenter.unsubscribeView();
+        mFeedPresenter.unsubscribe();
     }
 
 
@@ -75,7 +88,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     }
 
     private void setupRowClickListener(){
-        mFeedAdapter = new FeedAdapter(this, new ArrayList<Article>());
+        mFeedAdapter = new FeedAdapter(this, new ArrayList<>());
         mFeedRecyclerView.setAdapter(mFeedAdapter);
         mDisposable = mFeedAdapter.getItemClickSubject()
                 .subscribe(article -> mFeedPresenter.showArticleDetails(article));
@@ -99,7 +112,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
 
     @Override
     public void showToastMessage(final int message) {
-        runOnUiThread(() -> ToastHelper.showToastMessageFromResource(this, message));
+        runOnUiThread(() -> mToastHelper.showToastMessageFromResource(message));
     }
 
     @Override

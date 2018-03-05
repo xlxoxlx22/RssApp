@@ -5,8 +5,8 @@ import com.google.gson.Gson;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.test.rssapp.network.model.Article;
-import com.test.rssapp.network.model.RequestResponse;
+import com.test.rssapp.network.model.response.Article;
+import com.test.rssapp.network.model.response.ResponseObject;
 
 
 public class AppPreferences {
@@ -19,7 +19,7 @@ public class AppPreferences {
         this.mSharedPrefs = sharedPreferences;
     }
 
-    public void saveArticles(RequestResponse response) {
+    public void saveArticles(ResponseObject response) {
         SharedPreferences.Editor editor = mSharedPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(response);
@@ -32,7 +32,7 @@ public class AppPreferences {
         String json = mSharedPrefs.getString(PREFERENCE_RESPONSE_KEY, null);
 
         if (!TextUtils.isEmpty(json)) {
-            RequestResponse obj = gson.fromJson(json, RequestResponse.class);
+            ResponseObject obj = gson.fromJson(json, ResponseObject.class);
             return obj.getArticles();
         }
         return new ArrayList<>();

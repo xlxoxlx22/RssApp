@@ -1,23 +1,22 @@
-package com.test.rssapp.network.model;
+package com.test.rssapp.network.model.response;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class RequestResponse {
+public class ResponseObject {
 
-    @SerializedName("items") private List<Article> mArticles = null;
     @SerializedName("status") private String mStatus = null;
-    @SerializedName("feed") private Feed mFeed = null;
+    @SerializedName("totalResults") private int mTotalResultsCount;
+    @SerializedName("articles") private List<Article> mArticles = null;
 
 
     public List<Article> getArticles() {
         return mArticles;
     }
-    public Feed getFeed() {
-        return mFeed;
-    }
+
+    public int getTotalResultsCount() { return mTotalResultsCount;}
+
 
     public boolean getStatus() {
         if (mStatus != null && mStatus.equalsIgnoreCase("ok")) {

@@ -20,7 +20,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
-    private static final String BASE_URL = "https://api.rss2json.com/v1/";
+//    private static final String BASE_URL = "https://api.rss2json.com/v1/";
+    private static final String BASE_URL = "https://newsapi.org/v2/";
+//    https://newsapi.org/v2/top-headlines?sources=google-news-ru&apiKey=API_KEY
 
     public NetworkModule() {}
 

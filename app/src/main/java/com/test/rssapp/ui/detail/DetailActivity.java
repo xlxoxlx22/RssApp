@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.test.rssapp.network.model.Article;
 import com.test.rssapp.rssapp.R;
-
-import org.parceler.Parcels;
 
 public class DetailActivity extends AppCompatActivity {
 
