@@ -46,11 +46,10 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        ButterKnife.bind(this);                                           // инициализируем view
-        App.get(this).getComponent().plus(new FeedModule()).inject(this); // объявляем модуль
+        ButterKnife.bind(this);                                                 // инициализируем view
+        App.get(this).getComponent().plus(new FeedModule()).inject(this);   // объявляем модуль
 
-        if (mFeedPresenter != null)
-            mFeedPresenter.subscribeOnView(this);                         // привязываем presenter
+        if (mFeedPresenter != null) mFeedPresenter.subscribeOnView(this);    // привязываем presenter
 
         mAppEventDisposable = mAppEventBus.getAppEventBus()
                 .filter(appEvent -> appEvent == AppEvent.DATA_RECEIVED)

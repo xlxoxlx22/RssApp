@@ -39,28 +39,28 @@ public class DetailPresenter<T extends DetailView> implements BasePresenter<T> {
 
     // title
     public String getDetailTitle(){
-        if (mCurrentArticle != null && !TextUtils.isEmpty(mCurrentArticle.getTitle()))
+        if (isCurrentArticleNotNull() && isFieldNotNull(mCurrentArticle.getTitle()))
             return mCurrentArticle.getTitle();
         else return "";
     }
 
     // author
     public String getDetailAuthor(){
-        if (mCurrentArticle != null && !TextUtils.isEmpty(mCurrentArticle.getLink()))
+        if (isCurrentArticleNotNull() && isFieldNotNull(mCurrentArticle.getLink()))
             return mCurrentArticle.getLink();
         else return "";
     }
 
     // publishedAt
     public String getDetailPublishDate(){
-        if (mCurrentArticle != null && !TextUtils.isEmpty(mCurrentArticle.getPublicationDate()))
+        if (isCurrentArticleNotNull() && isFieldNotNull(mCurrentArticle.getPublicationDate()))
             return mCurrentArticle.getPublicationDate();
         else return "";
     }
 
     // description
     public String getDetailContent(){
-        if (mCurrentArticle != null && !TextUtils.isEmpty(mCurrentArticle.getDescription()))
+        if (isCurrentArticleNotNull() && isFieldNotNull(mCurrentArticle.getDescription()))
             return mCurrentArticle.getDescription();
         else return "";
     }
@@ -68,17 +68,27 @@ public class DetailPresenter<T extends DetailView> implements BasePresenter<T> {
 
     // urlToImage
     public String getDetaiImageUrl(){
-        if (mCurrentArticle != null && !TextUtils.isEmpty(mCurrentArticle.getImage()))
+        if (isCurrentArticleNotNull() && isFieldNotNull(mCurrentArticle.getImage()))
             return mCurrentArticle.getImage();
         else return "";
     }
 
 
     public void onLinkClick(){
-        if (mCurrentArticle != null && !TextUtils.isEmpty(mCurrentArticle.getLink())) {
+        if (isCurrentArticleNotNull() && isFieldNotNull(mCurrentArticle.getLink())) {
             mView.openLink(mCurrentArticle.getLink());
         } else {
             mView.showToastMessage(R.string.link_is_empty);
         }
+    }
+
+    private boolean isCurrentArticleNotNull() {
+        if (mCurrentArticle != null) return true;
+        else return false;
+    }
+
+    private boolean isFieldNotNull(String articleField) {
+        if (!TextUtils.isEmpty(articleField)) return true;
+        else return false;
     }
 }
